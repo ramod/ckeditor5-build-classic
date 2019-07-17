@@ -27,8 +27,17 @@ import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
+import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import FontFamily from '@ckeditor/ckeditor5-font/src/fontfamily';
+import FontSize from '@ckeditor/ckeditor5-font/src/fontsize';
+import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
+import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import TrackChanges from '@ckeditor/ckeditor5-track-changes/src/trackchanges';
+import Comments from '@ckeditor/ckeditor5-comments/src/comments';
 
-export default class ClassicEditor extends ClassicEditorBase {}
+export default class ClassicEditor extends ClassicEditorBase { }
 
 // Plugins to include in the build.
 ClassicEditor.builtinPlugins = [
@@ -52,7 +61,16 @@ ClassicEditor.builtinPlugins = [
 	Paragraph,
 	PasteFromOffice,
 	Table,
-	TableToolbar
+	TableToolbar,
+	Alignment,
+	FontFamily,
+	FontSize,
+	Highlight,
+	RemoveFormat,
+	Strikethrough,
+	Underline,
+	TrackChanges,
+	Comments,
 ];
 
 // Editor configuration.
@@ -61,25 +79,29 @@ ClassicEditor.defaultConfig = {
 		items: [
 			'heading',
 			'|',
+			'fontsize',
+			'fontfamily',
+			'|',
 			'bold',
 			'italic',
-			'link',
-			'bulletedList',
+			'underline',
+			'strikethrough',
+			'removeFormat',
+			'highlight',
+			'|',
 			'numberedList',
-			'imageUpload',
-			'blockQuote',
+			'bulletedList',
+			'|',
+			'link',
+			'blockquote',
 			'insertTable',
-			'mediaEmbed',
+			'|',
+			'trackChanges',
+			'|',
+			'comment',
+			'|',
 			'undo',
 			'redo'
-		]
-	},
-	image: {
-		toolbar: [
-			'imageStyle:full',
-			'imageStyle:side',
-			'|',
-			'imageTextAlternative'
 		]
 	},
 	table: {
