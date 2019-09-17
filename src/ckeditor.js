@@ -27,6 +27,9 @@ import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import TrackChanges from '@ckeditor/ckeditor5-track-changes/src/trackchanges';
 import Comments from '@ckeditor/ckeditor5-comments/src/comments';
+import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
+import Indent from '@ckeditor/ckeditor5-indent/src/indent';
+import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
 
 export default class ClassicEditor extends ClassicEditorBase { }
 
@@ -53,6 +56,9 @@ ClassicEditor.builtinPlugins = [
 	Underline,
 	TrackChanges,
 	Comments,
+	TextTransformation,
+	Indent,
+	IndentBlock
 ];
 
 // Editor configuration.
@@ -71,15 +77,17 @@ ClassicEditor.defaultConfig = {
 			'removeFormat',
 			'highlight',
 			'|',
+			'alignment',
 			'numberedList',
 			'bulletedList',
+			'outdent',
+			'indent',
 			'|',
 			'link',
 			'blockquote',
 			'insertTable',
 			'|',
 			'trackChanges',
-			'|',
 			'comment',
 			'|',
 			'undo',
