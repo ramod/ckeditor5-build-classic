@@ -30,6 +30,7 @@ import Comments from '@ckeditor/ckeditor5-comments/src/comments';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import Indent from '@ckeditor/ckeditor5-indent/src/indent';
 import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock';
+import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 
 export default class ClassicEditor extends ClassicEditorBase { }
 
@@ -58,7 +59,8 @@ ClassicEditor.builtinPlugins = [
 	Comments,
 	TextTransformation,
 	Indent,
-	IndentBlock
+	IndentBlock,
+	WordCount
 ];
 
 // Editor configuration.
