@@ -1,23 +1,27 @@
 /**
- * @license Copyright (c) 2003-2020, CKSource - Frederico Knabben. All rights reserved.
+ * @license Copyright (c) 2003-2024, CKSource Holding sp. z o.o. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
 
-'use strict';
-
 /* eslint-env node */
 
-const path = require( 'path' );
-const webpack = require( 'webpack' );
-const { bundler, styles } = require( '@ckeditor/ckeditor5-dev-utils' );
-const CKEditorWebpackPlugin = require( '@ckeditor/ckeditor5-dev-webpack-plugin' );
-const TerserPlugin = require( 'terser-webpack-plugin' );
+import path from 'path';
+import module from 'module';
+import { fileURLToPath } from 'url';
+import webpack from 'webpack';
+import { bundler, loaders } from '@ckeditor/ckeditor5-dev-utils';
+import { CKEditorTranslationsPlugin } from '@ckeditor/ckeditor5-dev-translations';
+import TerserPlugin from 'terser-webpack-plugin';
 
-module.exports = {
+const require = module.createRequire( import.meta.url );
+const __filename = fileURLToPath( import.meta.url );
+const __dirname = path.dirname( __filename );
+
+export default {
 	devtool: 'source-map',
 	performance: { hints: false },
 
-	entry: path.resolve( __dirname, 'src', 'ckeditor.js' ),
+	entry: path.resolve( __dirname, 'src', 'ckeditor.ts' ),
 
 	output: {
 		// The name under which the editor will be exported.
@@ -32,7 +36,6 @@ module.exports = {
 	optimization: {
 		minimizer: [
 			new TerserPlugin( {
-				sourceMap: true,
 				terserOptions: {
 					output: {
 						// Preserve CKEditor 5 license comments.
@@ -45,7 +48,7 @@ module.exports = {
 	},
 
 	plugins: [
-		new CKEditorWebpackPlugin( {
+		new CKEditorTranslationsPlugin( {
 			// UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
 			// When changing the built-in language, remember to also change it in the editor's configuration (src/ckeditor.js).
 			language: 'en',
@@ -59,33 +62,20 @@ module.exports = {
 
 	module: {
 		rules: [
-			{
-				test: /\.svg$/,
-				use: [ 'raw-loader' ]
-			},
-			{
-				test: /\.css$/,
-				use: [
-					{
-						loader: 'style-loader',
-						options: {
-							injectType: 'singletonStyleTag',
-							attributes: {
-								'data-cke': true
-							}
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: styles.getPostCssConfig( {
-							themeImporter: {
-								themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
-							},
-							minify: true
-						} )
-					}
-				]
-			}
+			loaders.getIconsLoader( { matchExtensionOnly: true } ),
+			loaders.getStylesLoader( {
+				themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' ),
+				minify: true
+			} ),
+			loaders.getTypeScriptLoader()
 		]
+	},
+
+	resolve: {
+		extensions: [ '.ts', '.js', '.json' ],
+		extensionAlias: {
+			'.js': [ '.js', '.ts' ]
+		}
 	}
 };
+
